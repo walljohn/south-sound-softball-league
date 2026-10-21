@@ -1,0 +1,957 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>South Sound Softball League</title>
+<meta name="description" content="The South Sound Softball League is a 12U summer softball league played on weeknights in Tacoma and Pierce County. No league fee. Weekends free for tournaments.">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Ccircle cx='32' cy='32' r='30' fill='%230F284F'/%3E%3Ccircle cx='32' cy='32' r='22' fill='%23F1EADC'/%3E%3Ccircle cx='32' cy='32' r='19' fill='none' stroke='%23C2392F' stroke-width='2'/%3E%3Ctext x='32' y='38' text-anchor='middle' font-family='Arial Black,Arial' font-weight='900' font-size='15' fill='%23C2392F'%3ESSSL%3C/text%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,600;1,9..144,400&family=Graduate&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --cream:#F1EADC;
+    --cream-2:#E6DECD;
+    --navy:#0F284F;
+    --navy-2:#284F80;
+    --red:#C2392F;
+    --ink:#121418;
+    --mute:#6A6E78;
+    --line:rgba(15,40,79,.16);
+    --display:"Anton", Impact, "Arial Narrow", sans-serif;
+    --serif:"Fraunces", Georgia, serif;
+    --sans:"Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    --varsity:"Graduate", "Arial Black", sans-serif;
+    --gutter:clamp(16px, 4vw, 56px);
+    --ease:cubic-bezier(.2,.7,.2,1);
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{background:var(--cream);color:var(--ink);font-family:var(--sans);line-height:1.5;-webkit-font-smoothing:antialiased}
+  img,svg{display:block;max-width:100%}
+  a{color:inherit;text-decoration:none}
+  ::selection{background:var(--red);color:#fff}
+
+  .eyebrow{font-family:var(--sans);font-weight:600;font-size:11px;letter-spacing:.28em;text-transform:uppercase}
+  .label{font-family:var(--sans);font-weight:600;font-size:11px;letter-spacing:.28em;text-transform:uppercase;color:var(--navy)}
+  .label b{color:var(--red);font-weight:600}
+  .display{font-family:var(--display);text-transform:uppercase;line-height:.9;letter-spacing:-.005em}
+  .serif{font-family:var(--serif)}
+  .wrap{padding-left:var(--gutter);padding-right:var(--gutter)}
+
+  .btn{display:inline-flex;align-items:center;gap:10px;background:var(--red);color:#fff;font-family:var(--serif);font-weight:600;font-size:17px;padding:16px 26px;border:1px solid var(--red);transition:transform .35s var(--ease), background .35s}
+  .btn:hover{background:#9c1c26;transform:translateY(-2px)}
+  .btn .arr{font-family:var(--sans);font-size:14px}
+  .link{font-family:var(--serif);font-weight:600;font-size:17px;border-bottom:2px solid var(--navy);padding-bottom:2px;display:inline-flex;align-items:center;gap:8px}
+  .link .arr{font-family:var(--sans);font-size:13px}
+
+  /* reveal */
+  .reveal{opacity:0;transform:translateY(28px);transition:opacity .9s var(--ease), transform .9s var(--ease)}
+  .reveal.in{opacity:1;transform:none}
+  .reveal[data-d="1"]{transition-delay:.1s}.reveal[data-d="2"]{transition-delay:.2s}.reveal[data-d="3"]{transition-delay:.3s}
+  @media (prefers-reduced-motion: reduce){.reveal{opacity:1;transform:none;transition:none}}
+
+  /* topbar + nav */
+  .topbar{background:var(--navy);color:var(--cream);display:flex;justify-content:space-between;padding:9px var(--gutter)}
+  .topbar .eyebrow{font-size:10px;opacity:.85}
+  .nav{position:sticky;top:0;z-index:50;background:rgba(244,240,230,.88);backdrop-filter:saturate(1.4) blur(14px);-webkit-backdrop-filter:saturate(1.4) blur(14px);border-bottom:1px solid var(--navy);display:grid;grid-template-columns:auto 1fr auto;align-items:center;gap:24px;padding:12px var(--gutter)}
+  .brand{display:flex;align-items:center;gap:14px}
+  .brand svg{width:50px;height:50px}
+  .brand .wm{display:flex;flex-direction:column;line-height:1;white-space:nowrap}
+  .brand .wm .a{font-family:var(--varsity);font-size:19px;color:var(--navy);letter-spacing:.02em}
+  .brand .wm .b{font-family:var(--sans);font-weight:700;font-size:9.5px;letter-spacing:.34em;color:var(--red);margin-top:4px}
+  .nav .links{display:flex;justify-content:center;gap:34px}
+  .nav .links a{font-family:var(--sans);font-weight:500;font-size:12px;letter-spacing:.22em;text-transform:uppercase;color:var(--navy);position:relative;white-space:nowrap}
+  .nav .links a::after{content:"";position:absolute;left:0;right:100%;bottom:-6px;height:2px;background:var(--red);transition:right .3s var(--ease)}
+  .nav .links a:hover::after{right:0}
+  .nav .btn{padding:13px 20px;font-size:15px}
+
+  /* hero */
+  .hero{display:grid;grid-template-columns:minmax(0,46fr) minmax(0,54fr);border-bottom:1px solid var(--navy)}
+  .hero .copy{padding:clamp(40px,6vw,80px) var(--gutter) clamp(32px,4vw,56px);display:flex;flex-direction:column;justify-content:center;border-right:1px solid var(--navy)}
+  .hero .eyebrow{color:var(--navy);margin-bottom:22px;display:flex;align-items:center;gap:14px}
+  .hero .eyebrow::before{content:"";width:36px;height:1px;background:var(--red);flex-shrink:0}
+  .hero h1{font-size:clamp(56px,6.4vw,118px);color:var(--navy)}
+  .hero h1 .r{color:var(--red)}
+  .hero p{font-family:var(--serif);font-size:clamp(18px,1.5vw,23px);line-height:1.4;max-width:34ch;margin-top:26px;color:var(--ink)}
+  .hero .actions{display:flex;align-items:center;gap:28px;margin-top:36px;flex-wrap:wrap}
+  .hero .facts{display:flex;flex-wrap:wrap;gap:12px 26px;margin-top:44px;padding-top:22px;border-top:1px solid var(--line)}
+  .hero .fact{display:flex;align-items:center;gap:10px;font-family:var(--sans);font-weight:600;font-size:11px;letter-spacing:.24em;text-transform:uppercase;color:var(--navy)}
+  .hero .fact::before{content:"";width:6px;height:6px;border-radius:50%;background:var(--red)}
+  .hero .art{position:relative;overflow:hidden;background:var(--navy);min-height:560px}
+  .hero .art .scene{position:absolute;inset:-8% 0 0 0;width:100%;height:112%;object-fit:cover;object-position:50% 42%;will-change:transform}
+  .hero .art .frame{position:absolute;inset:18px 18px 64px;border:1px solid rgba(244,240,230,.35);pointer-events:none}
+  .hero .art .seal{position:absolute;top:34px;right:34px;width:clamp(76px,7vw,112px);height:auto;filter:drop-shadow(0 10px 24px rgba(0,0,0,.45))}
+  .hero .art .caption{position:absolute;left:0;right:0;bottom:0;display:flex;justify-content:space-between;align-items:center;padding:13px var(--gutter);background:rgba(8,24,48,.72);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);color:var(--cream);border-top:1px solid rgba(244,240,230,.22)}
+  .hero .art .caption .eyebrow{font-size:10px;color:var(--cream);opacity:.85;margin:0}
+  .hero .art .caption .eyebrow::before{display:none}
+
+  /* band */
+  .band{background:var(--navy);color:var(--cream);display:grid;grid-template-columns:auto auto 1fr auto;align-items:center;gap:28px;padding:22px var(--gutter)}
+  .band .yr{background:var(--red);color:#fff;font-family:var(--display);font-size:30px;padding:4px 16px 2px;line-height:1.1}
+  .band .vr{width:1px;height:44px;background:rgba(244,240,230,.35)}
+  .band .t{font-family:var(--display);font-size:clamp(26px,3.4vw,44px);line-height:1;text-transform:none}
+  .band .sub{font-family:var(--sans);font-size:12px;letter-spacing:.18em;text-transform:uppercase;opacity:.85}
+  .band .ghost{border:1px solid rgba(244,240,230,.6);color:var(--cream);font-family:var(--serif);font-weight:600;font-size:16px;padding:14px 22px;display:inline-flex;gap:10px;align-items:center;transition:background .3s,color .3s}
+  .band .ghost:hover{background:var(--cream);color:var(--navy)}
+
+  /* sections */
+  section.block{padding:clamp(72px,9vw,128px) var(--gutter)}
+  .head{display:grid;grid-template-columns:1fr auto;align-items:end;gap:32px;margin-bottom:clamp(36px,5vw,64px)}
+  .head .label{margin-bottom:14px}
+  .head h2{font-size:clamp(46px,6.4vw,96px);color:var(--navy)}
+  .head h2 .r{color:var(--red)}
+  .head .side{display:flex;align-items:center;gap:20px;padding-bottom:14px}
+  .head .side .rule{width:clamp(80px,22vw,420px);height:1px;background:var(--navy)}
+  .lede{font-family:var(--serif);font-size:clamp(20px,1.9vw,27px);line-height:1.4;max-width:62ch;color:var(--ink)}
+  .lede em{color:var(--red);font-style:italic}
+
+  .stats{display:grid;grid-template-columns:repeat(4,1fr);border-top:1px solid var(--navy);border-left:1px solid var(--navy);margin-top:clamp(40px,5vw,72px)}
+  .stat{border-right:1px solid var(--navy);border-bottom:1px solid var(--navy);padding:28px 24px 26px}
+  .stat .n{font-family:var(--display);font-size:clamp(54px,6vw,92px);line-height:.9;color:var(--navy)}
+  .stat .n small{font-size:.45em;color:var(--red);vertical-align:top;margin-left:2px}
+  .stat .d{font-family:var(--sans);font-size:12px;letter-spacing:.2em;text-transform:uppercase;color:var(--mute);margin-top:14px}
+
+  .reasons{display:grid;grid-template-columns:1fr 1fr;gap:1px;background:var(--navy);border:1px solid var(--navy);margin-top:1px}
+  .reason{background:var(--cream);padding:clamp(28px,3.4vw,48px)}
+  .reason .was{font-family:var(--sans);font-size:11px;letter-spacing:.26em;text-transform:uppercase;color:var(--mute);display:flex;gap:12px;align-items:center}
+  .reason .was::before{content:"";width:22px;height:1px;background:var(--red)}
+  .reason h3{font-family:var(--display);font-size:clamp(30px,3.2vw,46px);line-height:.95;color:var(--navy);text-transform:uppercase;margin:14px 0 18px}
+  .reason p{font-family:var(--serif);font-size:clamp(17px,1.35vw,20px);line-height:1.45;max-width:40ch}
+
+  /* pinned */
+  .pin{display:grid;grid-template-columns:1fr 1fr;border-top:1px solid var(--navy);border-bottom:1px solid var(--navy)}
+  .pin .panel{position:sticky;top:75px;height:calc(100vh - 75px);min-height:560px;background:var(--navy);color:var(--cream);overflow:hidden;align-self:start}
+  .pin .panel .bg{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:50% 30%;opacity:.5}
+  .pin .panel::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(15,40,79,.15) 0%,rgba(15,40,79,.35) 45%,rgba(15,40,79,.9) 72%,#0F284F 100%)}
+  .pin .panel .fig{position:absolute;inset:0;z-index:1;display:flex;flex-direction:column;justify-content:flex-end;padding:var(--gutter);opacity:0;transform:translateY(20px);transition:opacity .7s var(--ease),transform .7s var(--ease)}
+  .pin .panel .fig.on{opacity:1;transform:none}
+  .pin .panel .fig .big{font-family:var(--display);font-size:clamp(160px,22vw,340px);line-height:.8;color:var(--cream);opacity:.1;position:absolute;right:-.04em;top:.1em;letter-spacing:-.02em}
+  .pin .panel .fig .word{font-family:var(--display);font-size:clamp(44px,5vw,84px);line-height:.9;text-transform:uppercase}
+  .pin .panel .fig .word .r{color:#F0604F}
+  .pin .panel .fig .eyebrow{opacity:.75;margin-bottom:18px}
+  .pin .panel .badge{position:absolute;top:var(--gutter);left:var(--gutter);width:84px;height:84px;opacity:.95;z-index:2}
+  /* step cards */
+  .viz{position:absolute;left:50%;top:42%;width:min(74%,400px);transform:translate(-50%,-50%) scale(.94) rotate(-2deg);transition:transform .8s var(--ease);background:var(--cream);color:var(--navy);box-shadow:0 30px 60px rgba(0,0,0,.45),0 2px 0 rgba(255,255,255,.2) inset;font-family:var(--sans)}
+  .fig.on .viz{transform:translate(-50%,-50%) scale(1) rotate(-2deg)}
+  .viz .vh{display:flex;justify-content:space-between;align-items:center;padding:12px 18px;border-bottom:1px dashed var(--navy);font-size:10px;letter-spacing:.24em;text-transform:uppercase;font-weight:700}
+  .viz .vh .live{display:inline-flex;align-items:center;gap:7px;color:var(--red)}
+  .viz .vh .live::before{content:"";width:7px;height:7px;border-radius:50%;background:var(--red);animation:blink 1.6s infinite}
+  @keyframes blink{50%{opacity:.25}}
+  .viz .vf{display:flex;justify-content:space-between;padding:10px 18px;border-top:1px dashed var(--navy);font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:var(--mute)}
+  .ticket .vm{padding:22px 18px 18px;text-align:left}
+  .ticket .lbl{font-size:11px;letter-spacing:.26em;text-transform:uppercase;color:var(--mute)}
+  .ticket .amt{font-family:var(--display);font-size:clamp(64px,7vw,104px);line-height:.95;color:var(--red);margin-top:6px}
+  .ticket .amt s{color:var(--navy);opacity:.35;font-size:.42em;margin-right:12px;vertical-align:.4em;text-decoration-color:var(--red);text-decoration-thickness:3px}
+  .ticket .stamp{position:absolute;right:16px;top:52%;transform:translateY(-50%) rotate(-14deg);border:3px solid var(--red);color:var(--red);font-family:var(--varsity);font-size:13px;letter-spacing:.08em;padding:6px 8px;opacity:.9}
+  .fieldcard .diamond{aspect-ratio:16/9;position:relative;overflow:hidden}
+  .fieldcard .diamond svg{position:absolute;inset:0;width:100%;height:100%}
+  .fieldcard .diamond .tag{position:absolute;left:14px;top:14px;background:var(--red);color:#fff;font-size:9px;letter-spacing:.26em;font-weight:700;padding:6px 9px}
+  .fieldcard .row{display:flex;justify-content:space-between;align-items:center;padding:11px 18px;border-top:1px solid var(--line);font-family:var(--serif);font-size:16px}
+  .fieldcard .row b{font-family:var(--sans);font-size:10px;letter-spacing:.24em;text-transform:uppercase;color:var(--red)}
+  .week .days{display:grid;grid-template-columns:repeat(7,1fr)}
+  .week .d{padding:14px 4px 12px;text-align:center;border-right:1px solid var(--line)}
+  .week .d:last-child{border-right:0}
+  .week .d i{display:block;font-style:normal;font-size:9px;letter-spacing:.2em;color:var(--mute);font-weight:600}
+  .week .d b{display:block;font-family:var(--display);font-size:clamp(22px,2.6vw,34px);line-height:1;margin:6px 0 8px;color:var(--navy)}
+  .week .d em{display:block;font-style:normal;font-size:8px;letter-spacing:.14em;text-transform:uppercase;font-weight:700;color:var(--mute);min-height:20px}
+  .week .d.game{background:var(--red);color:#fff}
+  .week .d.game i,.week .d.game b,.week .d.game em{color:#fff}
+  .week .d.open{background:rgba(15,40,79,.07)}
+  .week .d.tourney em{color:var(--navy)}
+  .board .rw{display:grid;grid-template-columns:28px 1fr 36px 36px;align-items:center;padding:11px 18px;border-top:1px solid var(--line);font-family:var(--serif);font-size:16px;font-weight:600}
+  .board .rw.hd{font-family:var(--sans);font-size:9px;letter-spacing:.24em;text-transform:uppercase;color:var(--mute);border-top:0;padding-top:12px;padding-bottom:4px;font-weight:600}
+  .board .rw .n{font-family:var(--display);color:var(--red);font-size:20px}
+  .board .rw .c{text-align:right;font-variant-numeric:tabular-nums;color:var(--mute);font-family:var(--sans);font-size:13px}
+  .pin .steps{padding:0 var(--gutter)}
+  .step{min-height:78vh;display:flex;flex-direction:column;justify-content:center;padding:60px 0;border-bottom:1px solid var(--line)}
+  .step:last-child{border-bottom:0}
+  .step .num{font-family:var(--serif);font-size:15px;color:var(--red);font-weight:600;letter-spacing:.1em}
+  .step h3{font-family:var(--display);font-size:clamp(40px,4.4vw,68px);line-height:.92;color:var(--navy);text-transform:uppercase;margin:16px 0 20px;max-width:12ch}
+  .step p{font-family:var(--serif);font-size:clamp(18px,1.5vw,22px);line-height:1.45;max-width:42ch}
+
+  /* teams */
+  .teams{display:grid;grid-template-columns:repeat(2,1fr);gap:1px;background:var(--navy);border:1px solid var(--navy)}
+  .team{background:var(--cream);padding:clamp(28px,3vw,44px);min-height:380px;display:flex;flex-direction:column;position:relative;overflow:hidden;transition:background .4s}
+  .team:hover{background:var(--cream-2)}
+  .team .idx{font-family:var(--serif);font-weight:600;color:var(--red);font-size:15px;letter-spacing:.1em}
+  .team .tag{font-family:var(--sans);font-size:11px;letter-spacing:.26em;text-transform:uppercase;color:var(--mute);margin-top:8px}
+  .team h3{font-family:var(--display);font-size:clamp(40px,4vw,62px);line-height:.92;color:var(--navy);text-transform:uppercase;margin-top:auto;padding-top:60px}
+  .team .coach{border-top:1px solid var(--navy);margin-top:22px;padding-top:16px;display:flex;justify-content:space-between;align-items:baseline;gap:12px}
+  .team .coach .k{font-family:var(--sans);font-size:11px;letter-spacing:.26em;text-transform:uppercase;color:var(--mute)}
+  .team .coach .v{font-family:var(--serif);font-size:20px;font-weight:600;color:var(--navy)}
+  .team.invite{background:var(--cream-2)}
+  .team.invite h3{color:var(--mute)}
+  .team .ghost{position:absolute;right:-.02em;top:-.08em;font-family:var(--display);font-size:clamp(150px,14vw,220px);line-height:1;color:var(--navy);opacity:.05;letter-spacing:-.03em;pointer-events:none}
+  .teams-foot{display:flex;justify-content:space-between;align-items:center;gap:20px;margin-top:22px;flex-wrap:wrap}
+  .teams-foot .lede{font-size:clamp(17px,1.3vw,20px)}
+
+  /* tables */
+  .rhythm{display:grid;grid-template-columns:repeat(3,1fr);border:1px solid var(--navy);margin-bottom:clamp(32px,4vw,56px)}
+  .rhythm > div{padding:22px 24px;border-right:1px solid var(--navy)}
+  .rhythm > div:last-child{border-right:0}
+  .rhythm .day{font-family:var(--display);font-size:clamp(30px,3vw,44px);color:var(--navy);text-transform:uppercase;line-height:1}
+  .rhythm .where{font-family:var(--serif);font-size:18px;margin-top:8px}
+  .rhythm .time{font-family:var(--sans);font-size:11px;letter-spacing:.24em;text-transform:uppercase;color:var(--red);margin-top:8px}
+  table{width:100%;border-collapse:collapse}
+  th{font-family:var(--sans);font-size:11px;letter-spacing:.24em;text-transform:uppercase;color:var(--mute);text-align:left;padding:0 14px 14px;border-bottom:1px solid var(--navy);font-weight:600}
+  td{padding:20px 14px;border-bottom:1px solid var(--line);font-family:var(--serif);font-size:19px;vertical-align:middle}
+  td.num,th.num{text-align:right;font-variant-numeric:tabular-nums}
+  td.date{font-family:var(--sans);font-weight:600;font-size:13px;letter-spacing:.08em;text-transform:uppercase;color:var(--navy);white-space:nowrap}
+  td.match{font-weight:600;color:var(--navy)}
+  td.match span.at{color:var(--mute);font-weight:400;font-style:italic;padding:0 8px}
+  td.where,td.time{color:var(--mute);font-size:17px}
+  td.result{font-family:var(--display);font-size:24px;color:var(--navy);letter-spacing:.02em;white-space:nowrap}
+  td.result .tbd{font-family:var(--sans);font-size:11px;letter-spacing:.24em;color:var(--red);text-transform:uppercase}
+  td.rank{font-family:var(--display);font-size:30px;color:var(--red);width:60px}
+  td.club{font-weight:600;color:var(--navy)}
+  td.club small{display:block;font-family:var(--sans);font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--mute);font-weight:500;margin-top:4px}
+  tr.lead td{background:rgba(15,40,79,.04)}
+  .empty{border:1px solid var(--navy);padding:clamp(32px,4vw,56px);display:grid;grid-template-columns:1fr auto;gap:32px;align-items:center}
+  .empty h3{font-family:var(--display);font-size:clamp(34px,3.6vw,56px);color:var(--navy);text-transform:uppercase;line-height:.95}
+  .empty p{font-family:var(--serif);font-size:19px;margin-top:14px;max-width:50ch}
+  .empty .stamp{font-family:var(--varsity);color:var(--red);border:3px solid var(--red);padding:10px 16px;font-size:18px;transform:rotate(-4deg);letter-spacing:.06em}
+  .table-note{font-family:var(--sans);font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--mute);margin-top:18px}
+  td.match .open{font-weight:400;font-style:italic;color:var(--mute)}
+  td.match .open .short{display:none}
+  .season-sum{display:grid;grid-template-columns:repeat(3,1fr);border:1px solid var(--navy);margin-bottom:clamp(28px,3vw,40px)}
+  .season-sum > div{padding:18px 22px;border-right:1px solid var(--navy)}
+  .season-sum > div:last-child{border-right:0}
+  .season-sum b{display:block;font-family:var(--display);font-size:clamp(26px,2.6vw,38px);line-height:1;color:var(--navy);font-weight:400;white-space:nowrap}
+  .season-sum span{display:block;font-family:var(--sans);font-size:11px;letter-spacing:.24em;text-transform:uppercase;color:var(--mute);margin-top:8px}
+
+  /* fields */
+  .fields{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--navy);border:1px solid var(--navy)}
+  .field{background:var(--cream);display:flex;flex-direction:column}
+  .field .photo{background:var(--navy);aspect-ratio:4/3;position:relative;overflow:hidden}
+  .field .photo svg{position:absolute;inset:0;width:100%;height:100%}
+  .field .photo .pill{position:absolute;left:18px;top:18px;background:var(--red);color:#fff;font-family:var(--sans);font-weight:700;font-size:10px;letter-spacing:.26em;text-transform:uppercase;padding:7px 10px}
+  .field .body{padding:clamp(24px,2.6vw,36px)}
+  .field h3{font-family:var(--display);font-size:clamp(34px,3.4vw,52px);color:var(--navy);text-transform:uppercase;line-height:.95}
+  .field .nights{font-family:var(--serif);font-size:19px;margin-top:12px}
+  .field .time{font-family:var(--sans);font-size:11px;letter-spacing:.24em;text-transform:uppercase;color:var(--red);margin-top:8px;min-height:16px}
+  .field .map{margin-top:22px;display:inline-flex;align-items:center;gap:8px;font-family:var(--sans);font-weight:600;font-size:12px;letter-spacing:.2em;text-transform:uppercase;color:var(--navy);border-bottom:1px solid var(--navy);padding-bottom:3px}
+
+  /* lockup + join */
+  .join{background:var(--navy);color:var(--cream);padding:clamp(80px,10vw,140px) var(--gutter);position:relative;overflow:hidden}
+  .join .scene-bg{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:50% 72%;opacity:.2}
+  .join .inner{position:relative;display:grid;grid-template-columns:1fr 1fr;gap:48px;align-items:center}
+  .lockup{display:flex;align-items:center;gap:clamp(20px,3vw,40px)}
+  .lockup .badge{width:clamp(150px,18vw,240px);height:auto;flex-shrink:0;filter:drop-shadow(0 10px 30px rgba(0,0,0,.35))}
+  .lockup .wm{display:flex;flex-direction:column;align-items:center}
+  .lockup .rules{display:flex;align-items:center;gap:14px;width:100%}
+  .lockup .rules i{flex:1;height:2px;background:#F0604F;display:block;box-shadow:0 5px 0 #F0604F}
+  .lockup .rules .star{color:var(--cream);font-size:18px;line-height:1}
+  .lockup .a{font-family:var(--varsity);font-size:clamp(34px,5vw,70px);line-height:1;color:var(--cream);text-shadow:3px 3px 0 var(--red);margin:14px 0 6px;white-space:nowrap}
+  .lockup .b{font-family:var(--sans);font-weight:700;font-size:clamp(14px,1.9vw,26px);letter-spacing:.42em;color:var(--cream);margin-left:.42em;white-space:nowrap}
+  .lockup .c{display:flex;align-items:center;gap:14px;width:100%;margin-top:14px}
+  .lockup .c i{flex:1;height:2px;background:#F0604F}
+  .lockup .c span{font-family:var(--sans);font-weight:700;font-size:clamp(10px,1.1vw,14px);letter-spacing:.34em;color:#F0604F;white-space:nowrap}
+  .join h2{font-size:clamp(46px,5.6vw,84px);color:var(--cream)}
+  .join h2 .r{color:#F0604F}
+  .join p{font-family:var(--serif);font-size:clamp(18px,1.5vw,22px);line-height:1.45;max-width:46ch;margin-top:22px;opacity:.9}
+  .join .actions{display:flex;gap:24px;align-items:center;flex-wrap:wrap;margin-top:34px}
+  .join .ghost{border:1px solid rgba(244,240,230,.6);color:var(--cream);font-family:var(--serif);font-weight:600;font-size:17px;padding:16px 26px;display:inline-flex;gap:10px;align-items:center;transition:background .3s,color .3s}
+  .join .ghost:hover{background:var(--cream);color:var(--navy)}
+  .join .note{font-family:var(--sans);font-size:12px;letter-spacing:.18em;text-transform:uppercase;opacity:.7}
+
+  footer{padding:36px var(--gutter);display:grid;grid-template-columns:auto 1fr auto;align-items:center;gap:24px;border-top:1px solid var(--navy)}
+  footer .eyebrow{color:var(--mute);font-size:10px}
+  footer .links{display:flex;gap:22px;justify-content:center;flex-wrap:wrap}
+  footer .links a{font-family:var(--sans);font-size:11px;letter-spacing:.22em;text-transform:uppercase;color:var(--navy);white-space:nowrap}
+
+  @media (max-width:1100px){
+    .stats{grid-template-columns:repeat(2,1fr)}
+    .nav .links{gap:18px}
+    .nav .links a{font-size:11px;letter-spacing:.16em}
+    .brand .wm .a{font-size:17px}
+    footer{grid-template-columns:1fr;text-align:center;row-gap:20px}
+    footer .brand{justify-content:center}
+  }
+  @media (max-width:900px){
+    .nav{grid-template-columns:1fr auto}
+    .nav .links{display:none}
+    .hero{grid-template-columns:1fr}
+    .hero .copy{border-right:0;border-bottom:1px solid var(--navy)}
+    .hero .art{min-height:0;aspect-ratio:4/5}
+    .hero .art .frame{inset:14px 14px 48px}
+    .hero .art .caption .eyebrow:last-child{display:none}
+    .band{grid-template-columns:auto 1fr;row-gap:16px}
+    .band .vr{display:none}
+    .band .sub{grid-column:1/-1}
+    .band .ghost{grid-column:1/-1;justify-self:start}
+    .head{grid-template-columns:1fr}
+    .head .side{display:none}
+    .reasons{grid-template-columns:1fr}
+    .pin{grid-template-columns:1fr}
+    .pin .panel{position:relative;top:auto;height:auto;min-height:0;aspect-ratio:4/5}
+    .pin .panel .fig .big{font-size:120px}
+    .pin .panel .badge{width:60px;height:60px}
+    .viz{top:40%;width:min(78%,360px)}
+    .fieldcard .diamond{aspect-ratio:21/9}
+    .fieldcard .row{padding:8px 18px;font-size:14px}
+    .pin .panel .fig .word{font-size:clamp(36px,10vw,56px)}
+    .step{min-height:0;padding:56px 0}
+    .teams,.fields,.rhythm{grid-template-columns:1fr}
+    .season-sum{grid-template-columns:1fr 1fr}
+    .season-sum > div{border-bottom:1px solid var(--navy)}
+    .season-sum > div:nth-child(2n){border-right:0}
+    .season-sum > div:nth-last-child(-n+2){border-bottom:0}
+    .rhythm > div{border-right:0;border-bottom:1px solid var(--navy)}
+    .rhythm > div:last-child{border-bottom:0}
+    .join .inner{grid-template-columns:1fr}
+    .lockup{justify-content:center}
+    footer{grid-template-columns:1fr;text-align:center}
+    footer .brand{justify-content:center}
+    .empty{grid-template-columns:1fr}
+    td.where,td.time{display:none}
+    th.where,th.time{display:none}
+    .hide-m{display:none}
+  }
+  @media (max-width:560px){
+    .stats{grid-template-columns:1fr 1fr}
+    .stat{padding:20px 16px}
+    .lockup{flex-direction:column;text-align:center}
+    .lockup .wm{width:100%}
+    td{padding:16px 10px;font-size:17px}
+    td.result{font-size:20px}
+    th.rs,td.rs,th.ra,td.ra,th.t,td.t,th.pct,td.pct{display:none}
+    td.club small{display:none}
+    td.rank{width:40px;font-size:24px}
+    td.match .open .long{display:none}
+    td.match .open .short{display:inline}
+    .season-sum b{font-size:22px;white-space:normal}
+    .season-sum > div{padding:14px 16px}
+    td.num,th.num{padding-left:6px;padding-right:6px}
+    .topbar .hide-s{display:none}
+    .nav{gap:12px}
+    .nav .btn{padding:11px 14px;font-size:14px}
+    .brand svg{width:42px;height:42px}
+    .brand .wm .a{font-size:15px}
+    .brand .wm .b{font-size:8px;letter-spacing:.28em}
+  }
+</style>
+</head>
+<body>
+
+<!-- ============ SVG DEFINITIONS (badge + scenes) ============ -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+    <clipPath id="badge-inner"><circle cx="100" cy="100" r="66"/></clipPath>
+    <linearGradient id="sky" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#C9DAEC"/><stop offset="1" stop-color="#E9F0F7"/>
+    </linearGradient>
+    <linearGradient id="water" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#3A6BAE"/><stop offset="1" stop-color="#244B86"/>
+    </linearGradient>
+    <linearGradient id="hero-sky" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#081830"/><stop offset=".38" stop-color="#132B52"/><stop offset=".62" stop-color="#3A5E93"/><stop offset=".72" stop-color="#7E93B5"/>
+    </linearGradient>
+    <radialGradient id="hero-glow" cx=".5" cy=".5" r=".5">
+      <stop offset="0" stop-color="#F2D7B8" stop-opacity=".85"/><stop offset=".55" stop-color="#E7B98F" stop-opacity=".28"/><stop offset="1" stop-color="#E7B98F" stop-opacity="0"/>
+    </radialGradient>
+    <linearGradient id="hero-mtn" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#FBF9F3"/><stop offset=".55" stop-color="#E6ECF3"/><stop offset=".88" stop-color="#A9BCD6"/><stop offset="1" stop-color="#7A93BA"/>
+    </linearGradient>
+    <linearGradient id="hero-mtn-shade" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#CBD7E7"/><stop offset=".7" stop-color="#9DB1CE"/><stop offset="1" stop-color="#7A93BA"/>
+    </linearGradient>
+    <linearGradient id="hero-water" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#5E7BAA"/><stop offset=".25" stop-color="#1F3D6C"/><stop offset="1" stop-color="#081830"/>
+    </linearGradient>
+    <radialGradient id="hero-vig" cx=".5" cy=".45" r=".75">
+      <stop offset=".55" stop-color="#081830" stop-opacity="0"/><stop offset="1" stop-color="#081830" stop-opacity=".55"/>
+    </radialGradient>
+    <filter id="soft" x="-20%" y="-200%" width="140%" height="500%"><feGaussianBlur stdDeviation="16"/></filter>
+    <filter id="soft-sm" x="-50%" y="-50%" width="200%" height="200%"><feGaussianBlur stdDeviation="6"/></filter>
+    <filter id="grain" x="0" y="0" width="100%" height="100%">
+      <feTurbulence type="fractalNoise" baseFrequency=".9" numOctaves="2" stitchTiles="stitch"/>
+      <feColorMatrix type="matrix" values="0 0 0 0 1  0 0 0 0 1  0 0 0 0 1  0 0 0 .9 0"/>
+    </filter>
+    <path id="fir" d="M0,0 L-10,26 L-5,24 L-16,52 L-9,50 L-22,80 L-13,78 L-28,112 L-3,112 L-3,120 L3,120 L3,112 L28,112 L13,78 L22,80 L9,50 L16,52 L5,24 L10,26 Z"/>
+    <path id="arc-top" d="M 19.8,117 A 82,82 0 1,1 180.2,117" fill="none"/>
+    <path id="arc-bot" d="M 29,141 A 82,82 0 0,0 171,141" fill="none"/>
+
+    <!-- The SSSL badge -->
+    <symbol id="sspl-badge" viewBox="0 0 200 200">
+      <circle cx="100" cy="100" r="99" fill="#F1EADC"/>
+      <circle cx="100" cy="100" r="97" fill="#0F284F"/>
+      <circle cx="100" cy="100" r="92.5" fill="none" stroke="#C2392F" stroke-width="1.6"/>
+      <text font-family="Inter, Arial, sans-serif" font-weight="700" font-size="12.5" fill="#F1EADC" letter-spacing="1.2">
+        <textPath href="#arc-top" startOffset="50%" text-anchor="middle">SOUTH SOUND SOFTBALL LEAGUE</textPath>
+      </text>
+      <text font-family="Inter, Arial, sans-serif" font-weight="600" font-size="6.6" fill="#F1EADC" letter-spacing="1.1">
+        <textPath href="#arc-bot" startOffset="50%" text-anchor="middle">TACOMA  ★  PIERCE COUNTY  ★  WASHINGTON</textPath>
+      </text>
+      <path d="M18 95.5 l1.5 3.1 3.4.5-2.5 2.4.6 3.4-3-1.6-3 1.6.6-3.4-2.5-2.4 3.4-.5z" fill="#F1EADC"/>
+      <path d="M182 95.5 l1.5 3.1 3.4.5-2.5 2.4.6 3.4-3-1.6-3 1.6.6-3.4-2.5-2.4 3.4-.5z" fill="#F1EADC"/>
+      <circle cx="100" cy="100" r="73" fill="#F1EADC"/>
+      <circle cx="100" cy="100" r="69.5" fill="none" stroke="#C2392F" stroke-width="2.4"/>
+      <g clip-path="url(#badge-inner)">
+        <rect x="30" y="30" width="140" height="140" fill="url(#sky)"/>
+        <!-- Rainier -->
+        <polygon points="36,100 68,56 80,66 100,44 120,66 132,58 164,100" fill="#F8FAFD"/>
+        <polygon points="100,44 120,66 132,58 164,100 100,100" fill="#C7D7E8"/>
+        <polygon points="86,68 100,44 112,58 104,62 96,56 92,66" fill="#DCE6F1"/>
+        <!-- treeline -->
+        <path d="M34,100 L38,94 L42,100 L46,92 L50,100 L54,95 L58,100 L62,93 L66,100 L70,96 L74,100 L78,93 L82,100 L86,95 L90,100 L94,92 L98,100 L102,95 L106,100 L110,93 L114,100 L118,96 L122,100 L126,92 L130,100 L134,95 L138,100 L142,93 L146,100 L150,96 L154,100 L158,93 L162,100 L166,96 L168,100 Z" fill="#284F80"/>
+        <!-- water -->
+        <rect x="30" y="100" width="140" height="70" fill="url(#water)"/>
+        <g stroke="#8FB3E0" stroke-width="1" stroke-linecap="round" opacity=".7">
+          <path d="M40,120 h14 M62,120 h10 M138,120 h18"/>
+          <path d="M44,134 h10 M150,130 h12"/>
+          <path d="M38,150 h12 M152,148 h10"/>
+        </g>
+        <!-- Narrows bridge -->
+        <g fill="#0F284F" stroke="#0F284F" stroke-linecap="round">
+          <rect x="64" y="82" width="4.5" height="28" stroke="none"/>
+          <rect x="131.5" y="82" width="4.5" height="28" stroke="none"/>
+          <rect x="62" y="80" width="8.5" height="3" stroke="none"/>
+          <rect x="129.5" y="80" width="8.5" height="3" stroke="none"/>
+          <path d="M30,106.5 H170" stroke-width="2.6"/>
+          <path d="M68,82 Q100,102 132,82" fill="none" stroke-width="1.4"/>
+          <path d="M66,82 Q50,96 30,106" fill="none" stroke-width="1.4"/>
+          <path d="M134,82 Q150,96 170,106" fill="none" stroke-width="1.4"/>
+          <path d="M76,86.5 V106 M84,90 V106 M92,92.5 V106 M100,93.5 V106 M108,92.5 V106 M116,90 V106 M124,86.5 V106 M58,89 V106 M50,95 V106 M42,100.5 V106 M142,89 V106 M150,95 V106 M158,100.5 V106" stroke-width=".9"/>
+        </g>
+        <!-- softball -->
+        <circle cx="100" cy="139" r="25.5" fill="#F3D96E" stroke="#0F284F" stroke-width="1.6"/>
+        <g fill="none" stroke="#C2392F" stroke-linecap="round">
+          <path d="M84.5,122 Q76.5,139 84.5,156" stroke-width="1.5"/>
+          <path d="M115.5,122 Q123.5,139 115.5,156" stroke-width="1.5"/>
+          <path d="M84.5,122 Q76.5,139 84.5,156" stroke-width="4.2" stroke-dasharray="1.1 3.1"/>
+          <path d="M115.5,122 Q123.5,139 115.5,156" stroke-width="4.2" stroke-dasharray="1.1 3.1"/>
+        </g>
+        <text x="100" y="146.5" text-anchor="middle" font-family="Graduate, 'Arial Black', sans-serif" font-size="19.5" fill="#C2392F" stroke="#0F284F" stroke-width=".55" letter-spacing=".5">SSSL</text>
+        <text x="100" y="155.5" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-weight="700" font-size="4.3" fill="#0F284F" letter-spacing=".9">12U SOFTBALL</text>
+      </g>
+    </symbol>
+
+    <!-- Scene: Rainier, the Narrows, the Sound — flat, in the brand palette -->
+    <path id="fir2" d="M0,0 L-15,38 L-7,34 L-24,78 L24,78 L7,34 L15,38 Z"/>
+    <symbol id="scene" viewBox="0 0 1200 900" preserveAspectRatio="xMidYMid slice">
+      <rect width="1200" height="900" fill="#0F284F"/>
+      <!-- red sun behind the peak -->
+      <circle cx="600" cy="330" r="168" fill="#C2392F"/>
+      <!-- Rainier: outline traced from a photograph of the western face -->
+      <path d="M0,595 L7,595 L13,595 L20,597 L27,598 L33,600 L40,600 L47,600 L53,600 L60,600 L67,600 L73,600 L80,598 L87,593 L93,588 L100,584 L107,579 L113,576 L120,574 L127,574 L133,574 L140,572 L147,569 L153,565 L160,560 L167,555 L173,550 L180,546 L187,541 L193,538 L200,534 L207,531 L213,527 L220,524 L227,519 L233,517 L240,512 L247,508 L253,500 L260,494 L267,487 L273,482 L280,477 L287,474 L293,468 L300,465 L307,463 L313,463 L320,460 L327,454 L333,449 L340,446 L347,442 L353,441 L360,437 L367,434 L373,427 L380,420 L387,409 L393,401 L400,392 L407,382 L413,370 L420,359 L427,349 L433,342 L440,337 L447,331 L453,330 L460,326 L467,323 L473,319 L480,316 L487,314 L493,312 L500,312 L507,312 L513,314 L520,314 L527,316 L533,316 L540,321 L547,309 L553,297 L560,269 L567,260 L573,250 L580,250 L587,250 L593,250 L600,252 L607,257 L613,269 L620,276 L627,281 L633,278 L640,278 L647,278 L653,279 L660,283 L667,288 L673,300 L680,309 L687,307 L693,299 L700,292 L707,292 L713,292 L720,295 L727,300 L733,311 L740,319 L747,326 L753,335 L760,344 L767,350 L773,356 L780,361 L787,368 L793,375 L800,382 L807,387 L813,392 L820,397 L827,399 L833,401 L840,402 L847,406 L853,413 L860,418 L867,423 L873,430 L880,437 L887,442 L893,448 L900,451 L907,458 L913,463 L920,470 L927,475 L933,480 L940,486 L947,493 L953,500 L960,519 L967,529 L973,536 L980,531 L987,531 L993,531 L1000,531 L1007,529 L1013,529 L1020,527 L1027,527 L1033,527 L1040,527 L1047,527 L1053,527 L1060,529 L1067,529 L1073,531 L1080,532 L1087,536 L1093,543 L1100,550 L1107,555 L1113,558 L1120,560 L1127,564 L1133,569 L1140,572 L1147,572 L1153,584 L1160,593 L1167,602 L1173,600 L1180,600 L1187,600 L1193,600 L1200,600 L1200,660 L0,660 Z" fill="#F1EADC"/>
+      <path d="M573,250 L580,250 L587,250 L593,250 L600,252 L607,257 L613,269 L620,276 L627,281 L633,278 L640,278 L647,278 L653,279 L660,283 L667,288 L673,300 L680,309 L687,307 L693,299 L700,292 L707,292 L713,292 L720,295 L727,300 L733,311 L740,319 L747,326 L753,335 L760,344 L767,350 L773,356 L780,361 L787,368 L793,375 L800,382 L807,387 L813,392 L820,397 L827,399 L833,401 L840,402 L847,406 L853,413 L860,418 L867,423 L873,430 L880,437 L887,442 L893,448 L900,451 L907,458 L913,463 L920,470 L927,475 L933,480 L940,486 L947,493 L953,500 L960,519 L967,529 L973,536 L980,531 L987,531 L993,531 L1000,531 L1007,529 L1013,529 L1020,527 L1027,527 L1033,527 L1040,527 L1047,527 L1053,527 L1060,529 L1067,529 L1073,531 L1080,532 L1087,536 L1093,543 L1100,550 L1107,555 L1113,558 L1120,560 L1127,564 L1133,569 L1140,572 L1147,572 L1153,584 L1160,593 L1167,602 L1173,600 L1180,600 L1187,600 L1193,600 L1200,600 L1200,660 L573,660 Z" fill="#DDD6C4"/>
+      <!-- ridgelines -->
+      <path d="M0,660 L110,618 L220,648 L340,606 L460,644 L600,616 L740,648 L860,610 L980,644 L1090,612 L1200,640 L1200,700 L0,700 Z" fill="#2A4A7C"/>
+      <path d="M0,690 L140,664 L290,686 L440,660 L600,684 L760,662 L910,686 L1060,664 L1200,682 L1200,730 L0,730 Z" fill="#284F80"/>
+      <!-- fir line -->
+      <g fill="#08152B">
+        <use href="#fir2" transform="translate(8,648)"/><use href="#fir2" transform="translate(44,656)"/><use href="#fir2" transform="translate(80,646)"/><use href="#fir2" transform="translate(116,658)"/>
+        <use href="#fir2" transform="translate(152,650)"/><use href="#fir2" transform="translate(188,660)"/><use href="#fir2" transform="translate(224,646)"/><use href="#fir2" transform="translate(260,656)"/>
+        <use href="#fir2" transform="translate(296,650)"/><use href="#fir2" transform="translate(332,660)"/><use href="#fir2" transform="translate(368,648)"/><use href="#fir2" transform="translate(404,656)"/>
+        <use href="#fir2" transform="translate(440,650)"/><use href="#fir2" transform="translate(476,660)"/><use href="#fir2" transform="translate(512,646)"/><use href="#fir2" transform="translate(548,656)"/>
+        <use href="#fir2" transform="translate(584,650)"/><use href="#fir2" transform="translate(620,660)"/><use href="#fir2" transform="translate(656,646)"/><use href="#fir2" transform="translate(692,656)"/>
+        <use href="#fir2" transform="translate(728,650)"/><use href="#fir2" transform="translate(764,660)"/><use href="#fir2" transform="translate(800,648)"/><use href="#fir2" transform="translate(836,656)"/>
+        <use href="#fir2" transform="translate(872,650)"/><use href="#fir2" transform="translate(908,660)"/><use href="#fir2" transform="translate(944,646)"/><use href="#fir2" transform="translate(980,656)"/>
+        <use href="#fir2" transform="translate(1016,650)"/><use href="#fir2" transform="translate(1052,660)"/><use href="#fir2" transform="translate(1088,648)"/><use href="#fir2" transform="translate(1124,656)"/>
+        <use href="#fir2" transform="translate(1160,650)"/><use href="#fir2" transform="translate(1196,660)"/>
+      </g>
+      <!-- the Sound -->
+      <rect x="0" y="726" width="1200" height="174" fill="#13284B"/>
+      <g stroke-linecap="round" fill="none">
+        <path d="M540,772 h120 M560,806 h80 M580,842 h40" stroke="#C2392F" stroke-width="4" opacity=".75"/>
+        <path d="M70,790 h110 M1010,784 h120 M160,850 h70 M960,846 h90" stroke="#F1EADC" stroke-width="3" opacity=".28"/>
+      </g>
+      <!-- the Narrows -->
+      <g stroke="#F1EADC" stroke-linecap="round" opacity=".2" fill="none">
+        <path d="M0,758 H1200" stroke-width="6"/>
+        <path d="M382,758 v70 M406,758 v70 M794,758 v70 M818,758 v70" stroke-width="7"/>
+      </g>
+      <g stroke="#F1EADC" fill="#F1EADC" stroke-linecap="round">
+        <!-- towers: two legs with cross braces -->
+        <rect x="378" y="556" width="8" height="194" stroke="none"/><rect x="402" y="556" width="8" height="194" stroke="none"/>
+        <rect x="790" y="556" width="8" height="194" stroke="none"/><rect x="814" y="556" width="8" height="194" stroke="none"/>
+        <rect x="372" y="550" width="44" height="8" stroke="none"/><rect x="784" y="550" width="44" height="8" stroke="none"/>
+        <rect x="384" y="600" width="20" height="6" stroke="none"/><rect x="384" y="648" width="20" height="6" stroke="none"/><rect x="384" y="696" width="20" height="6" stroke="none"/>
+        <rect x="796" y="600" width="20" height="6" stroke="none"/><rect x="796" y="648" width="20" height="6" stroke="none"/><rect x="796" y="696" width="20" height="6" stroke="none"/>
+        <!-- deck and cables -->
+        <path d="M0,744 H1200" stroke-width="9"/>
+        <path d="M394,556 Q600,722 806,556" fill="none" stroke-width="4"/>
+        <path d="M394,556 Q230,660 50,740" fill="none" stroke-width="4"/>
+        <path d="M806,556 Q970,660 1150,740" fill="none" stroke-width="4"/>
+        <path d="M440,596 V740 M480,624 V740 M520,648 V740 M560,664 V740 M600,672 V740 M640,664 V740 M680,648 V740 M720,624 V740 M760,596 V740 M340,590 V740 M290,624 V740 M240,656 V740 M190,684 V740 M140,710 V740 M860,590 V740 M910,624 V740 M960,656 V740 M1010,684 V740 M1060,710 V740" stroke-width="2.2"/>
+      </g>
+    </symbol>
+
+    <!-- Field card art: a diamond -->
+    <symbol id="diamond" viewBox="0 0 400 300" preserveAspectRatio="xMidYMid slice">
+      <rect width="400" height="300" fill="#0F284F"/>
+      <g fill="none" stroke="#F1EADC" stroke-width="2" opacity=".9">
+        <path d="M200,290 L40,130 A226,226 0 0 1 360,130 Z" fill="#284F80" stroke="none" opacity=".7"/>
+        <path d="M200,290 L40,130 M200,290 L360,130"/>
+        <path d="M40,130 A226,226 0 0 1 360,130"/>
+        <path d="M200,290 L110,200 L200,110 L290,200 Z" fill="#C2392F" fill-opacity=".9"/>
+        <path d="M200,290 L110,200 L200,110 L290,200 Z"/>
+        <circle cx="200" cy="200" r="16" fill="#F1EADC" stroke="none"/>
+        <circle cx="200" cy="290" r="38"/>
+      </g>
+    </symbol>
+  </defs>
+</svg>
+
+<!-- ============ TOP ============ -->
+<div class="topbar">
+  <span class="eyebrow">Tacoma <span class="hide-s">· Pierce County</span> · Washington</span>
+  <span class="eyebrow" id="topbar-season">Summer 2027 · 12U</span>
+</div>
+
+<header class="nav">
+  <a class="brand" href="#top">
+    <svg><use href="#sspl-badge"/></svg>
+    <span class="wm"><span class="a">SOUTH SOUND</span><span class="b">SOFTBALL LEAGUE</span></span>
+  </a>
+  <nav class="links">
+    <a href="#league">The League</a>
+    <a href="#teams">Teams</a>
+    <a href="#schedule">Schedule</a>
+    <a href="#standings">Standings</a>
+    <a href="#fields">Fields</a>
+  </nav>
+  <a class="btn" href="#join" data-contact>Get in touch <span class="arr">↗</span></a>
+</header>
+
+<!-- ============ HERO ============ -->
+<section class="hero" id="top">
+  <div class="copy">
+    <div class="eyebrow"><span>South Sound Softball League · 12U · <span id="hero-season">Summer 2027</span></span></div>
+    <h1 class="display">Summer softball,<br>built for the<br><span class="r">South Sound.</span></h1>
+    <p>A weeknight 12U softball league in Tacoma and Pierce County, run by the coaches who play in it. No league fee. Weekends left open for tournaments.</p>
+    <div class="actions">
+      <a class="btn" href="#schedule">See the schedule <span class="arr">↗</span></a>
+      <a class="link" href="#league">How it works</a>
+    </div>
+    <div class="facts">
+      <span class="fact">No league fee</span>
+      <span class="fact">Weeknight games</span>
+      <span class="fact">12U teams</span>
+      <span class="fact">No weekend games</span>
+    </div>
+  </div>
+  <div class="art">
+    <img class="scene" id="hero-scene" src="assets/hero.jpg" alt="Mount Rainier and the Tacoma Narrows Bridge at sunset">
+    <div class="frame"></div>
+    <svg class="seal"><use href="#sspl-badge"/></svg>
+    <div class="caption">
+      <span class="eyebrow">Our city. Our league.</span>
+      <span class="eyebrow">Tacoma · Pierce County · Washington</span>
+    </div>
+  </div>
+</section>
+
+<div class="band">
+  <span class="yr" id="band-year">2027</span>
+  <span class="vr"></span>
+  <span class="t">12U softball. Weeknights in Tacoma.</span>
+  <a class="ghost" href="#standings">Standings <span>↗</span></a>
+</div>
+
+<!-- ============ 01 THE LEAGUE ============ -->
+<section class="block" id="league">
+  <div class="head">
+    <div>
+      <div class="label reveal"><b>01</b> / The League</div>
+      <h2 class="display reveal" data-d="1">Softball, the way<br>the South Sound <span class="r">plays it.</span></h2>
+    </div>
+    <div class="side reveal" data-d="2"><span class="rule"></span><a class="link" href="#teams">Meet the teams <span class="arr">↗</span></a></div>
+  </div>
+  <p class="lede reveal">The South Sound Softball League is a 12U summer league for Tacoma and Pierce County. Games are played on weeknights at Foss, Lincoln, Hunt, and Salish Field. No league fee, and weekends kept open for tournaments. <em>It is run by the coaches whose teams play in it.</em></p>
+
+  <div class="stats">
+    <div class="stat reveal"><div class="n">$0</div><div class="d">League fee</div></div>
+    <div class="stat reveal" data-d="1"><div class="n">12U</div><div class="d">Age group</div></div>
+    <div class="stat reveal" data-d="2"><div class="n">4</div><div class="d">Home fields</div></div>
+    <div class="stat reveal" data-d="3"><div class="n">0</div><div class="d">Weekend games</div></div>
+  </div>
+
+  <div class="reasons">
+    <div class="reason reveal">
+      <div class="was">Location</div>
+      <h3>Close to home</h3>
+      <p>Every game is played in Tacoma and Pierce County, on fields the teams already call home.</p>
+    </div>
+    <div class="reason reveal" data-d="1">
+      <div class="was">Cost</div>
+      <h3>No league fee</h3>
+      <p>Teams pay only for the home games they host: umpires and field time. Budgets stay with the programs.</p>
+    </div>
+    <div class="reason reveal">
+      <div class="was">Schedule</div>
+      <h3>Weeknights only</h3>
+      <p>Weeknight games through the summer. Weekends belong to tournaments.</p>
+    </div>
+    <div class="reason reveal" data-d="1">
+      <div class="was">Leadership</div>
+      <h3>Run by coaches</h3>
+      <p>The league is organized by the coaches whose teams are in it. Decisions are made at the field.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ============ HOW IT WORKS (pinned) ============ -->
+<section class="pin" id="how">
+  <div class="panel">
+    <img class="bg" src="assets/hero.jpg" alt="">
+    <svg class="badge"><use href="#sspl-badge"/></svg>
+
+    <div class="fig on" data-fig="1">
+      <div class="big">01</div>
+      <div class="viz ticket">
+        <div class="vh"><span>SSSL · Summer 2027</span><span>One team</span></div>
+        <div class="vm"><div class="lbl">League fee</div><div class="amt">$0</div></div>
+        <div class="stamp">12U · SSSL</div>
+        <div class="vf"><span>Home games</span><span>Umpires &amp; field, per game</span></div>
+      </div>
+      <div class="eyebrow">How it works</div><div class="word">No league<br><span class="r">fee.</span></div>
+    </div>
+
+    <div class="fig" data-fig="2">
+      <div class="big">02</div>
+      <div class="viz fieldcard">
+        <div class="diamond"><svg><use href="#diamond"/></svg><span class="tag">HOME GAME</span></div>
+        <div class="row"><span>Umpires</span><b>Home team</b></div>
+        <div class="row"><span>Field fees</span><b>Home team</b></div>
+        <div class="row"><span>Field insurance</span><b>Each team</b></div>
+        <div class="vf"><span>League fee</span><span>None</span></div>
+      </div>
+      <div class="eyebrow">How it works</div><div class="word">Host your<br><span class="r">home games.</span></div>
+    </div>
+
+    <div class="fig" data-fig="3">
+      <div class="big">03</div>
+      <div class="viz week">
+        <div class="vh"><span>One week in the SSSL</span><span>Weeknights</span></div>
+        <div class="days">
+          <div class="d open"><i>MON</i><b>M</b><em></em></div>
+          <div class="d open"><i>TUE</i><b>T</b><em></em></div>
+          <div class="d open"><i>WED</i><b>W</b><em></em></div>
+          <div class="d open"><i>THU</i><b>T</b><em></em></div>
+          <div class="d"><i>FRI</i><b>F</b><em></em></div>
+          <div class="d tourney"><i>SAT</i><b>S</b><em>Tourney</em></div>
+          <div class="d tourney"><i>SUN</i><b>S</b><em>Tourney</em></div>
+        </div>
+        <div class="vf"><span>Weeknights only</span><span>0 weekends</span></div>
+      </div>
+      <div class="eyebrow">How it works</div><div class="word">Play on<br><span class="r">weeknights.</span></div>
+    </div>
+
+    <div class="fig" data-fig="4">
+      <div class="big">04</div>
+      <div class="viz board">
+        <div class="vh"><span>Standings</span><span class="live">Live</span></div>
+        <div class="rw hd"><span></span><span>Team</span><span class="c">W</span><span class="c">L</span></div>
+        <div class="rw"><span class="n">1</span><span>Tacoma SC 12U</span><span class="c">–</span><span class="c">–</span></div>
+        <div class="vf"><span>Schedule · Standings</span><span>This site</span></div>
+      </div>
+      <div class="eyebrow">How it works</div><div class="word">Follow it<br><span class="r">right here.</span></div>
+    </div>
+  </div>
+  <div class="steps">
+    <div class="step" data-step="1">
+      <div class="num">STEP 01</div>
+      <h3>There is no league fee.</h3>
+      <p>Teams keep their budgets for their own programs.</p>
+    </div>
+    <div class="step" data-step="2">
+      <div class="num">STEP 02</div>
+      <h3>Each team hosts its home games.</h3>
+      <p>The home team covers umpires and field time for the games it hosts, and every team carries its own field insurance.</p>
+    </div>
+    <div class="step" data-step="3">
+      <div class="num">STEP 03</div>
+      <h3>Games are midweek.</h3>
+      <p>Games are played on weeknights through the summer. Weekends stay open for tournaments.</p>
+    </div>
+    <div class="step" data-step="4">
+      <div class="num">STEP 04</div>
+      <h3>Schedule and standings live here.</h3>
+      <p>Both are posted on this site and kept current through the season.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 02 TEAMS ============ -->
+<section class="block" id="teams">
+  <div class="head">
+    <div>
+      <div class="label reveal"><b>02</b> / Teams</div>
+      <h2 class="display reveal" data-d="1">12U softball.<br>One <span class="r">summer.</span></h2>
+    </div>
+    <div class="side reveal" data-d="2"><span class="rule"></span><a class="link" href="#standings">Standings <span class="arr">↗</span></a></div>
+  </div>
+  <div class="teams" id="teams-grid"></div>
+  <div class="teams-foot reveal">
+    <p class="lede">12U softball clubs in the South Sound are welcome.</p>
+    <a class="link" href="#join" data-contact>Get in touch <span class="arr">↗</span></a>
+  </div>
+</section>
+
+<!-- ============ 03 SCHEDULE ============ -->
+<section class="block" id="schedule" style="background:var(--cream-2);border-top:1px solid var(--navy);border-bottom:1px solid var(--navy)">
+  <div class="head">
+    <div>
+      <div class="label reveal"><b>03</b> / Schedule</div>
+      <h2 class="display reveal" data-d="1">Weeknights.<br>All <span class="r">summer.</span></h2>
+    </div>
+    <div class="side reveal" data-d="2"><span class="rule"></span><a class="link" href="#fields">The fields <span class="arr">↗</span></a></div>
+  </div>
+  <div class="rhythm reveal" id="rhythm"></div>
+  <div id="schedule-body" class="reveal"></div>
+</section>
+
+<!-- ============ 04 STANDINGS ============ -->
+<section class="block" id="standings">
+  <div class="head">
+    <div>
+      <div class="label reveal"><b>04</b> / Standings</div>
+      <h2 class="display reveal" data-d="1">Where things<br><span class="r">stand.</span></h2>
+    </div>
+    <div class="side reveal" data-d="2"><span class="rule"></span><a class="link" href="#schedule">Full schedule <span class="arr">↗</span></a></div>
+  </div>
+  <div id="standings-body" class="reveal"></div>
+</section>
+
+<!-- ============ 05 FIELDS ============ -->
+<section class="block" id="fields" style="border-top:1px solid var(--navy)">
+  <div class="head">
+    <div>
+      <div class="label reveal"><b>05</b> / Fields</div>
+      <h2 class="display reveal" data-d="1">Home <span class="r">turf.</span></h2>
+    </div>
+    <div class="side reveal" data-d="2"><span class="rule"></span><span class="eyebrow" style="color:var(--navy)">All in Pierce County</span></div>
+  </div>
+  <div class="fields" id="fields-grid"></div>
+</section>
+
+<!-- ============ JOIN ============ -->
+<section class="join" id="join">
+  <img class="scene-bg" src="assets/hero.jpg" alt="">
+  <div class="inner">
+    <div class="lockup reveal">
+      <svg class="badge"><use href="#sspl-badge"/></svg>
+      <div class="wm">
+        <div class="rules"><i></i><span class="star">★</span><i></i></div>
+        <div class="a">SOUTH SOUND</div>
+        <div class="b">SOFTBALL LEAGUE</div>
+        <div class="c"><i></i><span>12U SOFTBALL</span><i></i></div>
+      </div>
+    </div>
+    <div class="reveal" data-d="1">
+      <h2 class="display">Summer 2027 in<br>the <span class="r">South Sound.</span></h2>
+      <p>The league is open to 12U softball teams in Tacoma and Pierce County. Teams host their own home games and carry their own field insurance. There is no league fee.</p>
+      <div class="actions">
+        <a class="ghost" href="#join" data-contact data-contact-main>Get in touch <span>↗</span></a>
+        <span class="note" id="contact-note"></span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <a class="brand" href="#top">
+    <svg><use href="#sspl-badge"/></svg>
+    <span class="wm"><span class="a">SOUTH SOUND</span><span class="b">SOFTBALL LEAGUE</span></span>
+  </a>
+  <div class="links">
+    <a href="#league">The League</a><a href="#teams">Teams</a><a href="#schedule">Schedule</a><a href="#standings">Standings</a><a href="#fields">Fields</a>
+  </div>
+  <span class="eyebrow">© <span id="year"></span> South Sound Softball League · Tacoma, WA</span>
+</footer>
+
+<script>
+/* =========================================================
+   EDIT HERE. Everything on the page reads from this block.
+   ========================================================= */
+const CONFIG = {
+  seasonLabel: "Summer 2027",
+  year: 2027,
+  contactEmail: ""            // e.g. "league@example.com" — the "Bring your team" buttons become mailto links once set
+};
+
+const TEAMS = [
+  { id: "tsc12", name: "Tacoma Softball Club 12U", short: "Tacoma SC 12U", club: "Tacoma Softball Club", coach: "" }
+];
+
+const FIELDS = [
+  { id: "foss",    name: "Foss",         nights: "Game nights to be announced", time: "", pill: "", map: "https://www.google.com/maps/search/?api=1&query=Foss+High+School+Tacoma+WA" },
+  { id: "lincoln", name: "Lincoln",      nights: "Game nights to be announced", time: "", pill: "", map: "https://www.google.com/maps/search/?api=1&query=Lincoln+High+School+Tacoma+WA" },
+  { id: "hunt",    name: "Hunt",         nights: "Game nights to be announced", time: "", pill: "", map: "https://www.google.com/maps/search/?api=1&query=Hunt+Middle+School+Tacoma+WA" },
+  { id: "salish",  name: "Salish Field", nights: "Game nights to be announced", time: "", pill: "", map: "https://www.google.com/maps/search/?api=1&query=Salish+Field+Tacoma+WA" }
+];
+
+// Weekly rhythm shown above the schedule
+const RHYTHM = [];   // weekly game-night strip above the schedule; leave empty until nights are set
+
+// One line per game date. home/away take a team id above ("premier", "prep"), the name of a visiting
+// club in quotes, or "" while the matchup is still open. Fill in homeScore/awayScore once the game is final.
+// Each team plays 10: nine against visiting opponents and one against each other.
+const GAMES = [
+];
+const GAME_WINDOW = "7:00 – 10:00 PM";
+/* ========================= end of edit block ========================= */
+
+const $ = s => document.querySelector(s);
+const byId = (arr, id) => arr.find(x => x.id === id) || { name: id, short: id };
+const esc = s => String(s).replace(/[&<>"]/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
+const fmtDate = iso => new Date(iso + "T12:00:00").toLocaleDateString("en-US", { weekday: "short", month: "short", day: "numeric" });
+
+// season labels
+$("#topbar-season").textContent = CONFIG.seasonLabel + " · 12U";
+$("#hero-season").textContent = CONFIG.seasonLabel;
+$("#band-year").textContent = CONFIG.year;
+$("#year").textContent = new Date().getFullYear();
+
+// contact buttons
+document.querySelectorAll("[data-contact]").forEach(a => {
+  if (CONFIG.contactEmail) a.href = "mailto:" + CONFIG.contactEmail + "?subject=" + encodeURIComponent("South Sound Softball League");
+});
+$("#contact-note").textContent = CONFIG.contactEmail ? CONFIG.contactEmail : "Contact details coming soon";
+if (!CONFIG.contactEmail) { const m = $("[data-contact-main]"); m.style.display = "none"; }
+
+// teams
+$("#teams-grid").innerHTML = TEAMS.map((t, i) => `
+  <article class="team reveal" data-d="${i}">
+    <div class="ghost">0${i + 1}</div>
+    <div class="idx">0${i + 1}</div>
+    <div class="tag">${esc(t.club)} · 12U</div>
+    <h3>${esc(t.short)}</h3>
+    ${t.coach ? `<div class="coach"><span class="k">Head coach</span><span class="v">${esc(t.coach)}</span></div>` : `<div class="coach"><span class="k">Head coach</span><span class="v">To be announced</span></div>`}
+  </article>`).join("") + `
+  <article class="team invite reveal" data-d="1">
+    <div class="idx">0${TEAMS.length + 1}</div>
+    <div class="tag">Open spot · 12U</div>
+    <h3>Your club here</h3>
+    <div class="coach"><span class="k">12U clubs welcome</span><a class="link" href="#join" data-contact>Get in touch <span class="arr">↗</span></a></div>
+  </article>`;
+
+// fields
+$("#fields-grid").innerHTML = FIELDS.map((f, i) => `
+  <article class="field reveal" data-d="${i}">
+    <div class="photo"><svg><use href="#diamond"/></svg>${f.pill ? `<span class="pill">${esc(f.pill)}</span>` : ""}</div>
+    <div class="body">
+      <h3>${esc(f.name)}</h3>
+      <div class="nights">${esc(f.nights)}</div>
+      <div class="time">${esc(f.time)}</div>
+      <a class="map" href="${f.map}" target="_blank" rel="noopener">Open in Maps <span>↗</span></a>
+    </div>
+  </article>`).join("");
+
+// rhythm
+if (!RHYTHM.length) $("#rhythm").style.display = "none";
+$("#rhythm").innerHTML = RHYTHM.map(r => `
+  <div><div class="day">${esc(r.day)}</div><div class="where">${esc(r.where)}</div><div class="time">${esc(r.time)}</div></div>`).join("");
+
+// schedule
+(function renderSchedule() {
+  const el = $("#schedule-body");
+  if (!GAMES.length) {
+    el.innerHTML = `<div class="empty">
+      <div><h3>Season dates are being set.</h3>
+      <p>Games run on weeknights through the summer at Foss, Lincoln, Hunt, and Salish Field. The full schedule is posted here once dates are set.</p></div>
+      <div class="stamp">COMING SOON</div></div>`;
+    return;
+  }
+  const sorted = [...GAMES].sort((a, b) => a.date.localeCompare(b.date));
+  const side = key => key ? (TEAMS.find(t => t.id === key) || { name: key, short: key }) : null;   // team id, visiting club name, or open
+  const rows = sorted.map(g => {
+    const home = side(g.home), away = side(g.away), field = byId(FIELDS, g.field);
+    const done = home && away && g.homeScore != null && g.awayScore != null;
+    const matchup = home && away ? `${esc(away.name)}<span class="at">at</span>${esc(home.name)}`
+                  : home || away ? `${esc((home || away).name)}<span class="at">vs</span><span class="open">opponent to be announced</span>`
+                  : `<span class="open"><span class="long">Matchup to be announced</span><span class="short">Matchup TBA</span></span>`;
+    const result = done ? `${esc(away.short)} ${g.awayScore} · ${esc(home.short)} ${g.homeScore}` : `<span class="tbd">Scheduled</span>`;
+    return `<tr><td class="date">${fmtDate(g.date)}</td>
+      <td class="match">${matchup}</td>
+      <td class="where">${esc(field.name)}</td>
+      <td class="time">${esc(g.time || "")}</td>
+      <td class="result">${result}</td></tr>`;
+  }).join("");
+  const first = fmtDate(sorted[0].date), last = fmtDate(sorted[sorted.length - 1].date);
+  el.innerHTML = `<div class="season-sum">
+      <div><b>${sorted.length}</b><span>Game dates</span></div>
+      <div><b>${esc(first.replace(/^\w+, /, ""))} – ${esc(last.replace(/^\w+, /, ""))}</b><span>Season</span></div>
+      <div><b>${esc(GAME_WINDOW)}</b><span>Every game</span></div>
+    </div>
+    <table><thead><tr><th>Date</th><th>Matchup</th><th class="where">Field</th><th class="time">Time</th><th>Result</th></tr></thead><tbody>${rows}</tbody></table>
+    <div class="table-note">Visitor listed first · all times Pacific</div>`;
+})();
+
+// standings — computed from final scores in GAMES
+(function renderStandings() {
+  const table = Object.fromEntries(TEAMS.map(t => [t.id, { t, w: 0, l: 0, tie: 0, rs: 0, ra: 0 }]));
+  GAMES.forEach(g => {
+    if (g.homeScore == null || g.awayScore == null) return;
+    const h = table[g.home], a = table[g.away];               // visiting clubs are not in TEAMS and are skipped
+    if (h) { h.rs += g.homeScore; h.ra += g.awayScore; if (g.homeScore > g.awayScore) h.w++; else if (g.homeScore < g.awayScore) h.l++; else h.tie++; }
+    if (a) { a.rs += g.awayScore; a.ra += g.homeScore; if (g.awayScore > g.homeScore) a.w++; else if (g.awayScore < g.homeScore) a.l++; else a.tie++; }
+  });
+  const rows = Object.values(table);
+  const pct = r => { const g = r.w + r.l + r.tie; return g ? (r.w + r.tie / 2) / g : 0; };
+  rows.sort((x, y) => pct(y) - pct(x) || (y.rs - y.ra) - (x.rs - x.ra) || x.t.name.localeCompare(y.t.name));
+  const lead = rows[0];
+  const anyPlayed = rows.some(r => r.w + r.l + r.tie > 0);
+  $("#standings-body").innerHTML = `<table>
+    <thead><tr><th></th><th>Team</th><th class="num">W</th><th class="num">L</th><th class="num t">T</th><th class="num pct">PCT</th><th class="num">GB</th><th class="num rs">RS</th><th class="num ra">RA</th></tr></thead>
+    <tbody>${rows.map((r, i) => {
+      const g = r.w + r.l + r.tie;
+      const gb = anyPlayed ? ((lead.w - r.w) + (r.l - lead.l)) / 2 : 0;
+      return `<tr class="${i === 0 && anyPlayed ? "lead" : ""}">
+        <td class="rank">${i + 1}</td>
+        <td class="club">${esc(r.t.name)}<small>Head coach ${esc(r.t.coach)}</small></td>
+        <td class="num">${r.w}</td><td class="num">${r.l}</td><td class="num t">${r.tie}</td>
+        <td class="num pct">${g ? pct(r).toFixed(3).replace(/^0/, "") : "—"}</td>
+        <td class="num">${!anyPlayed || gb === 0 ? "—" : gb % 1 ? gb.toFixed(1) : gb}</td>
+        <td class="num rs">${r.rs}</td><td class="num ra">${r.ra}</td></tr>`;
+    }).join("")}</tbody></table>
+    <div class="table-note">${anyPlayed ? "Updated from final scores" : "Standings update as games are played"}</div>`;
+})();
+
+// reveal on scroll
+const io = new IntersectionObserver(es => es.forEach(e => { if (e.isIntersecting) { e.target.classList.add("in"); io.unobserve(e.target); } }), { threshold: 0, rootMargin: "0px 0px -6% 0px" });
+document.querySelectorAll(".reveal").forEach(el => io.observe(el));
+
+// pinned panel: show the figure for whichever step is nearest the middle of the screen
+const figs = document.querySelectorAll(".pin .fig");
+const steps = document.querySelectorAll(".step");
+let current = "1";
+function trackSteps() {
+  const mid = innerHeight * .5;
+  let best = null, bestDist = Infinity;
+  steps.forEach(s => {
+    const r = s.getBoundingClientRect();
+    const d = Math.abs((r.top + r.bottom) / 2 - mid);
+    if (d < bestDist) { bestDist = d; best = s.dataset.step; }
+  });
+  if (best && best !== current) {
+    current = best;
+    figs.forEach(f => f.classList.toggle("on", f.dataset.fig === current));
+  }
+}
+addEventListener("scroll", trackSteps, { passive: true });
+addEventListener("resize", trackSteps);
+trackSteps();
+
+// hero parallax
+const scene = $("#hero-scene");
+const art = scene.parentElement;
+const reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
+let ticking = false;
+const onScroll = () => {
+  if (!reduce) {
+    const top = art.getBoundingClientRect().top;      // how far the art has scrolled past the top of the screen
+    const slack = art.clientHeight * .12;              // the scene is 12% taller than its frame
+    scene.style.transform = `translateY(${Math.max(0, Math.min(-top * .18, slack))}px)`;
+  }
+  ticking = false;
+};
+addEventListener("scroll", () => { if (!ticking) { ticking = true; requestAnimationFrame(onScroll); } }, { passive: true });
+addEventListener("resize", onScroll);
+onScroll();
+</script>
+</body>
+</html>
